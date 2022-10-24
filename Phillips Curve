@@ -1,0 +1,65 @@
+# ====================================
+# Project : Post Curva de Phillips
+# Creators: VS
+# Date     :23.10.22
+# Goal     : Scatter plot de Curva de Phillips Latam
+# ====================================
+
+install.packages("tidyverse")
+install.packages("ggplot2")
+
+library(tidyverse)
+
+# w1:
+# ====================================
+# # Seting up var-val-vectors 
+# ====================================
+
+Country 	 <-c("Perú", "Chile", "Colombia", "Argentina", "México", "Costa Rica", "Uruguay", "Ecuador", "Brazil", "Bolivia")
+
+GDP 				<-c(2.6,    -1, 	   2.2,     2,        1.2,     2.9,    3.6,    2.7, 		1,   3.2 )
+
+Inflation   <-c(3,		6.2,	     6,      60,         4.8,    4.8,    7.2,    1.4,  4.7,   3.6 )
+
+#Retrieving Argentina & Ecuador
+
+Country 	 <-c("Perú", "Chile", "Colombia",  "México", "Costa Rica", "Uruguay",  "Brazil", "Bolivia")
+
+GDP 				<-c(2.6,    -1, 	   2.2,             1.2,     2.9,    3.6,    		1,   3.2 )
+
+Inflation   <-c(3,		6.2,	     6,              4.8,    4.8,    7.2,    1.4,     3.6 )
+
+# ====================================
+# # Integrate
+# ====================================
+df <- tibble(Country, GDP, Inflation)
+
+# ====================================
+# # Package data: 
+# ====================================
+
+library(ggplot2)
+
+ggplot (data=df) +
+
+geom_point(mapping=aes(x=GDP, y=Inflation, color=Country),size=6.5)+
+
+geom_hline(yintercept=mean(Inflation)) +
+
+geom_vline(xintercept=mean(GDP)) +
+
+xlim(-3.5,5) +
+
+ylim(0,10) + 
+
+annotate ("text", x=GDP,y=Inflation,label=Country) +
+
+annotate("text", x=-2.2,y=4,label="Inflación promedio=4.63") +
+
+annotate("text", x=2,y=0,label="GDP promedio=2.04")+
+
+labs(title="GDP & Inflación en Latam, 2023/p",
+
+	subtitle="No incluye Argentina hiper-inflancionaria ni Ecuador dolarizado",  # For large names "/n" to use a second line
+
+	caption= "Fuente: IMF - ")
